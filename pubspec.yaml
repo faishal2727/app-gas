@@ -1,0 +1,53 @@
+name: gas_ku
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.19.6 <3.0.0'
+
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  fade_shimmer: ^2.2.0
+  flutter_expandable_fab: ^1.7.1
+  persistent_header_adaptive: ^2.0.0
+  expandable_text: ^2.3.0
+  camera: ^0.10.5
+  flutter_easyloading: ^3.0.5
+  syncfusion_flutter_charts: ^21.2.4
+  open_whatsapp: ^0.0.1
+  url_launcher: ^6.1.11
+  mrx_charts:
+  intl: ^0.17.0
+  http: ^0.13.5
+  fl_chart: ^0.35.0
+  flip_card: ^0.7.0
+  shared_preferences: ^2.1.0
+  introduction_screen: ^3.1.7
+  lottie: ^2.3.2
+  flutter_vision: ^1.1.1
+  tflite_flutter: ^0.10.0
+  flutter_tflite: ^1.0.1
+  fluttertoast: ^8.0.8
+  get: 4.6.5
+  flutter: 
+    sdk: flutter
+  google_fonts: ^2.0.0 
+ 
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+  assets:
+    - assets/image/
+    - assets/lottie/
+    - assets/x/
+    - assets/labels.txt
+    - assets/model.tflite
+    - assets/y.txt
+    - assets/y.tflite
+
