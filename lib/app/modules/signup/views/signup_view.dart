@@ -105,9 +105,18 @@ class SignupView extends GetView<SignupController> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
                             labelText: 'Username',
                             hintText: 'Masukan Username',
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: primaryColor,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -124,9 +133,18 @@ class SignupView extends GetView<SignupController> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
                             labelText: 'Email',
                             hintText: 'Masukan Email',
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: primaryColor,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -156,9 +174,18 @@ class SignupView extends GetView<SignupController> {
                                   controller.toglePasswordVisibility();
                                 },
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: primaryColor,
+                                ),
+                              ),
                               labelText: 'Password',
                               hintText: 'Masukan Password',
-                              prefixIcon: Icon(Icons.lock_rounded),
+                              prefixIcon: Icon(
+                                Icons.lock_rounded,
+                                color: primaryColor,
+                              ),
                             ),
                           ),
                         ),
@@ -189,9 +216,18 @@ class SignupView extends GetView<SignupController> {
                                   controller.toglePasswordVisibility2();
                                 },
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: primaryColor,
+                                ),
+                              ),
                               labelText: 'Konfirmasi Password',
                               hintText: 'Masukan Konfirmasi Password',
-                              prefixIcon: Icon(Icons.lock_rounded),
+                              prefixIcon: Icon(
+                                Icons.lock_rounded,
+                                color: primaryColor,
+                              ),
                             ),
                           ),
                         ),
@@ -199,19 +235,19 @@ class SignupView extends GetView<SignupController> {
                           height: 15.0,
                         ),
                         Obx(() {
-                          return controller.isLoadingLogin.value
+                          return controller.isLoadingSignUp.value
                               ? Center(
                                   child: Lottie.asset(
-                                      "assets/lottie/loading2.json",
+                                      "assets/lottie/load.json",
                                       height: 100,
                                       width: 100))
                               : ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: primaryColor,
-                                    minimumSize: const Size.fromHeight(35),
+                                    minimumSize: Size.fromHeight(40),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
-                                    ), // NEW
+                                    ), 
                                   ),
                                   onPressed: () {
                                     if (controller.formKey.currentState!
@@ -219,7 +255,7 @@ class SignupView extends GetView<SignupController> {
                                       controller.register();
                                     }
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Daftar Sekarang',
                                     style: TextStyle(
                                       fontSize: 16,

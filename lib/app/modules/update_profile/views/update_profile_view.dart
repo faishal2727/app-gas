@@ -103,10 +103,8 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                   final newName = controller.nameController.text;
                   final newEmail = controller.emailController.text;
                   final token = controller.token!;
-
-      
-                  // Pembaruan nilai currentUser.value di ProfileController
-                  Get.find<ProfileController>().currentUser.value = User(name: newName, email: newEmail);
+                  Get.find<ProfileController>().currentUser.value =
+                      User(name: newName, email: newEmail);
                   controller.updateUser();
                 },
                 child: const Text(

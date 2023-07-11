@@ -8,9 +8,7 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   var obscureText = true.obs;
   static RxBool isLoading = false.obs;
-  RxBool visibility = true.obs;
   RxBool isLoadingLogin = false.obs;
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final ApiService _apiService = ApiService();
@@ -32,6 +30,7 @@ class LoginController extends GetxController {
     final password = passwordController.text;
 
     try {
+      isLoadingLogin.value = true;
       final newToken = await _apiService.login(email, password);
       token.value = newToken?.toString() ?? '';
       await _preferenceManager.saveToken(newToken?.toString() ?? '');
@@ -45,6 +44,8 @@ class LoginController extends GetxController {
         errorMessage,
         snackPosition: SnackPosition.BOTTOM,
       );
+    } finally {
+      isLoadingLogin.value = false;
     }
   }
 }

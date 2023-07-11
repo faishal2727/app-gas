@@ -12,7 +12,7 @@ class DetailController extends GetxController {
   final noHpDist = Get.arguments;
   final Uri _url = Uri.parse('https://flutter.dev');
   Uri sms = Uri.parse('sms:101022?body=your+text+here');
-   Uri phoneno = Uri.parse('tel:+97798345348734');
+  Uri phoneno = Uri.parse('tel:+97798345348734');
 
   @override
   void onInit() {
@@ -29,19 +29,7 @@ class DetailController extends GetxController {
 
    Future<void> launchPhone() async {
     if (!await launchUrl(phoneno)) {
-      throw Exception('Could not launch $phoneno');
+      throw Exception('Could not launch $noHpDist');
     }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

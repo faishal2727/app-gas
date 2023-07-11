@@ -1,10 +1,10 @@
-
+import 'package:gas_ku/app/modules/history/controllers/history_controller.dart';
+import 'package:gas_ku/app/modules/visualisasi/controllers/visualisasi_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:intl/intl.dart';
 import '../../../data/api/api_service.dart';
 import '../../../data/model/gas.dart';
-import '../../../data/model/gas_model.dart';
+
 
 class HomeController extends GetxController {
   Rx<bool> shimmer = false.obs;
@@ -12,37 +12,28 @@ class HomeController extends GetxController {
   String cdate = DateFormat("yyyy-MM-dd").format(DateTime.now());
   RxList<Gas> gas = <Gas>[].obs;
   final ApiService _apiService = ApiService();
-
-
-
+  final isLoading = false.obs;
+  final uye = Get.put(HistoryController);
 
   @override
   void onInit() {
     // showShimmer();
     // getAllGas();
-    getDate();
     getListGas();
+    Get.put(HistoryController);
     super.onInit();
   }
 
-  Future getDate() async {
- 
-  }
-
-
   Future<void> getListGas() async {
     try {
+      isLoading.value = true;
       final gasList = await _apiService.getListGas();
       gas.value = gasList;
     } catch (e) {
       print('Error getting list inventory: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
-  // Future showShimmer() async {
-  //   shimmer(true);
-  // await Future.delayed(const Duration(seconds: 4), () {});
-  // shimmer(false);
-  // print("$shimmer $connectionStatus");
-  // shimmer.refresh();
-  // }
+
 }

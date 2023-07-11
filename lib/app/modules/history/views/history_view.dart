@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gas_ku/app/data/model/inventory.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../component/arrow_back.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/colors.dart';
@@ -38,16 +39,15 @@ class HistoryView extends GetView<HistoryController> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Get.toNamed(Routes.VISUALISASI),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: itemColor,
+                        color: bgColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       padding: EdgeInsets.all(10),
                       child: Icon(
                         Icons.short_text_outlined,
-                        color: primaryColor,
+                        color: bgColor,
                       ),
                     ),
                   ),
@@ -59,23 +59,49 @@ class HistoryView extends GetView<HistoryController> {
                 padding: EdgeInsets.all(16),
                 width: Get.width,
                 child: Obx(() {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 1 / 1,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemCount: controller.history.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {},
-                        child: Card_History(
-                          history: controller.history[index],
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: Lottie.asset('assets/lottie/load.json',
+                          width: 100, height: 100),
+                    );
+                  } else if (controller.history.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 130),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Lottie.asset('assets/lottie/not-result.json',
+                                width: 250, height: 250),
+                            Text(
+                              "Hmmm ... Sepertinya Data Tidak Ada",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: primaryColor),
+                            )
+                          ],
                         ),
-                      );
-                    },
-                  );
+                      ),
+                    );
+                  } else {
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 1 / 1,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                      ),
+                      itemCount: controller.history.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {},
+                          child: Card_History(
+                            history: controller.history[index],
+                          ),
+                        );
+                      },
+                    );
+                  }
                 }),
               ),
             ),
@@ -114,7 +140,8 @@ class Card_History extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Laporan hari: ${history.createdAt.toUtc().toString().substring(0, 16)}"),
+            Text(
+                "Laporan hari: ${history.createdAt.toUtc().toString().substring(0, 16)}"),
             Text("Gas Ijo: ${history.gasIjo}"),
             Text("Bright Gas: ${history.brightGas}"),
             Text("Blue Gas: ${history.blueGas}"),

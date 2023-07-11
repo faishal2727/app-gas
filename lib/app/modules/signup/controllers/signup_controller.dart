@@ -9,7 +9,7 @@ class SignupController extends GetxController {
   var obscureText2 = true.obs;
   RxBool visibility = true.obs;
   RxBool visibilitys = true.obs;
-  RxBool isLoadingLogin = false.obs;
+  RxBool isLoadingSignUp = false.obs;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -36,21 +36,24 @@ class SignupController extends GetxController {
       return;
     }
     try {
+      isLoadingSignUp.value = true;
       await _apiService.register(name, email, password, rePassword);
       Get.offNamed('/login');
       Get.snackbar(
-        'Error',
-        "Brehasil)",
+        'Berhasil',
+        "Berhasil",
         snackPosition: SnackPosition.BOTTOM,
       );
     } catch (e) {
       print(e);
       final errorMessage = e.toString();
       Get.snackbar(
-        'Error',
+        'Toast',
         errorMessage,
         snackPosition: SnackPosition.BOTTOM,
       );
+    } finally {
+      isLoadingSignUp.value = false;
     }
   }
 

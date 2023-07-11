@@ -14,29 +14,26 @@ class Card_History extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: Padding(
-        padding: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.all(8),
         child: InkWell(
           onTap: () => Get.toNamed(Routes.HISTORY),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: itemColor,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0), //(x,y)
-                  blurRadius: 3.0,
-                ),
-              ],
-            ),
+             decoration: BoxDecoration(
+              image: DecorationImage(
+              image: AssetImage('assets/image/uye1.png'),
+              fit: BoxFit.cover,
+            ), 
+               color: secondaryColor,
+            borderRadius: BorderRadius.circular(16),
+          ),
             height: 100,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.history,
-                    color: primaryColor,
+                    Icons.history_edu,
+                    color: Colors.white,
                     size: 40,
                   ),
                   Padding(
@@ -45,9 +42,9 @@ class Card_History extends StatelessWidget {
                     child: Text(
                       'History',
                       style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: primaryColor),
+                          color: Colors.white),
                     ),
                   ),
                 ],

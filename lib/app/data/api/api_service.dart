@@ -9,7 +9,7 @@ import '../model/user.dart';
 
 class ApiService {
   static const String baseUrl =
-      'https://web-service-production-d577.up.railway.app';
+      'https://gaskeun-production.up.railway.app/';
 
   Future<String?> login(String email, String password) async {
     final url = Uri.parse('$baseUrl/user/signin');
@@ -144,7 +144,7 @@ class ApiService {
               currentStock: item['currentStock'].toString(),
               mustStock: item['mustStock'].toString(),
               minStock: item['minStock'].toString(),
-              noHpDist: item['noHpist'].toString(),
+              noHpDist: item['noHpDist'].toString(),
             );
             gasList.add(gas);
           }
@@ -156,6 +156,20 @@ class ApiService {
     } else {
       final errorMessage = response.body;
       throw Exception(errorMessage);
+    }
+  }
+
+  Future<void> sendEmail(String email) async {
+    final String url = '$baseUrl/user/forgot-password';
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({'email': email}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Gagal mengirim email');
     }
   }
 

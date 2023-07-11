@@ -13,6 +13,8 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const VISUALISASI = _Paths.VISUALISASI;
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
+  static const SPLASH = _Paths.SPLASH;
+  static const WEBVIEW = _Paths.WEBVIEW;
 }
 
 abstract class _Paths {
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const VISUALISASI = '/visualisasi';
   static const UPDATE_PROFILE = '/update-profile';
+  static const SPLASH = '/splash';
+  static const WEBVIEW = '/webview';
 }

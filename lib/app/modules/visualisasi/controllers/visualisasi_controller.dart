@@ -1,23 +1,30 @@
 import 'package:get/get.dart';
 
-class VisualisasiController extends GetxController {
-  //TODO: Implement VisualisasiController
+import '../../../data/api/api_service.dart';
+import '../../../data/model/inventory.dart';
 
-  final count = 0.obs;
+class VisualisasiController extends GetxController {
+  RxList<Inventory> history = <Inventory>[].obs;
+  final ApiService _apiService = ApiService();
+  final isLoading = false.obs;
+
   @override
   void onInit() {
+    print('Controller kont');
+    getListInventory();
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> getListInventory() async {
+    try {
+      isLoading.value = true;
+      final inventoryList = await _apiService.getListInventory();
+      history.value = inventoryList;
+      print('Inventory data loaded: ${history.length}');
+    } catch (e) {
+      print('Error getting list inventory: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

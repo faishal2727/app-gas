@@ -16,10 +16,14 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/views/splash_view.dart';
 import '../modules/update_profile/bindings/update_profile_binding.dart';
 import '../modules/update_profile/views/update_profile_view.dart';
 import '../modules/visualisasi/bindings/visualisasi_binding.dart';
 import '../modules/visualisasi/views/visualisasi_view.dart';
+import '../modules/webview/bindings/webview_binding.dart';
+import '../modules/webview/views/webview_view.dart';
 
 part 'app_routes.dart';
 
@@ -61,7 +65,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL,
-      page: () =>  DetailView(),
+      page: () => DetailView(),
       binding: DetailBinding(),
     ),
     GetPage(
@@ -71,13 +75,23 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.VISUALISASI,
-      page: () =>  VisualisasiView(),
+      page: () => VisualisasiView(),
       binding: VisualisasiBinding(),
     ),
     GetPage(
       name: _Paths.UPDATE_PROFILE,
       page: () => const UpdateProfileView(),
       binding: UpdateProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.WEBVIEW,
+      page: () => const WebviewView(),
+      binding: WebviewBinding(),
     ),
   ];
 }

@@ -82,11 +82,21 @@ class LoginView extends GetView<LoginController> {
                           },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
                               borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
                             ),
                             labelText: 'Email',
                             hintText: 'Masukkan Email',
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: primaryColor,
+                            ),
                           ),
                         ),
                         SizedBox(height: 15.0),
@@ -104,6 +114,12 @@ class LoginView extends GetView<LoginController> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(
+                                  color: primaryColor,
+                                ),
+                              ),
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   controller.obscureText.value
@@ -117,11 +133,11 @@ class LoginView extends GetView<LoginController> {
                               ),
                               labelText: 'Password',
                               hintText: 'Masukkan Password',
-                              prefixIcon: Icon(Icons.lock_rounded),
+                              prefixIcon: Icon(Icons.lock_rounded, color: primaryColor,),
                             ),
                           ),
                         ),
-                        SizedBox(height: 4.0),
+                        SizedBox(height: 8.0),
                         GestureDetector(
                           onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
                           child: Container(
@@ -139,7 +155,7 @@ class LoginView extends GetView<LoginController> {
                           return controller.isLoadingLogin.value
                               ? Center(
                                   child: Lottie.asset(
-                                    "assets/lottie/loading2.json",
+                                    "assets/lottie/load.json",
                                     height: 100,
                                     width: 100,
                                   ),
@@ -147,7 +163,7 @@ class LoginView extends GetView<LoginController> {
                               : ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: primaryColor,
-                                    minimumSize: const Size.fromHeight(35),
+                                    minimumSize: const Size.fromHeight(40),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
@@ -175,7 +191,7 @@ class LoginView extends GetView<LoginController> {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: bgColor,
-                            minimumSize: const Size.fromHeight(35),
+                            minimumSize: const Size.fromHeight(40),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(width: 1.0, color: primaryColor),
                               borderRadius: BorderRadius.circular(8.0),

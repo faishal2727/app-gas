@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../data/api/api_service.dart';
+import '../../../data/model/user.dart';
 import '../../../data/preference/preference_manager.dart';
+import '../../profile/controllers/profile_controller.dart';
 
 class UpdateProfileController extends GetxController {
   final PreferenceManager _preferenceManager;
@@ -20,6 +22,10 @@ class UpdateProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Mengisi nilai default pada nameController dan emailController
+    final currentUser = Get.find<ProfileController>().currentUser.value;
+    nameController.text = currentUser.name;
+    emailController.text = currentUser.email;
   }
 
   Future<void> updateUser() async {
@@ -33,8 +39,7 @@ class UpdateProfileController extends GetxController {
         final message =
             await _apiService.updateUser(tokenValue, newName, newEmail);
         print('Pengguna berhasil diperbarui: $message');
-        nameController.text = newName;
-        emailController.text = newEmail;
+        Get.find<ProfileController>().currentUser.value = User(name: newName, email: newEmail);
         Get.snackbar(
           'Sukses',
           "Sukses Update User",

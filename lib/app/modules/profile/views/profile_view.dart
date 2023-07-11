@@ -1,6 +1,7 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../component/arrow_back.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/colors.dart';
@@ -61,22 +62,36 @@ class ProfileView extends GetView<ProfileController> {
             SizedBox(
               height: 20,
             ),
-            Obx(() {
-              final currentUser = controller.currentUser.value;
-              final name = currentUser.name;
-              return Text(
-                currentUser.name,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              );
-            }),
-            Obx(() {
-              final currentUser = controller.currentUser.value;
-              final email = currentUser.email;
-              return Text(
-                "${currentUser.email}",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              );
-            }),
+            Obx(
+              () {
+                if (controller.isLoadingProfile.value) {
+                  return Center(
+                    child: Lottie.asset(
+                      'assets/lottie/load.json',
+                      width: 100,
+                      height: 100,
+                    ),
+                  );
+                } else {
+                  final currentUser = controller.currentUser.value;
+                  final name = currentUser.name;
+                  final email = currentUser.email;
+                  return Column(
+                    children: [
+                      Text(
+                        currentUser.name,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "${currentUser.email}",
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
             Padding(
               padding: EdgeInsets.all(15),
               child: Container(
@@ -117,7 +132,7 @@ class ProfileView extends GetView<ProfileController> {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
+                      onTap: () => Get.toNamed(Routes.WEBVIEW),
                       child: Row(
                         children: [
                           Container(
@@ -134,7 +149,7 @@ class ProfileView extends GetView<ProfileController> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Reset Password',
+                              'WebView',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),

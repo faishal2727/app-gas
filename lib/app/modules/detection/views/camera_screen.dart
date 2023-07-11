@@ -1,141 +1,205 @@
-import 'package:flutter/material.dart';
+import 'dart:ffi';
+
 import 'package:camera/camera.dart';
-import 'object_detection.dart';
+import 'package:flutter/material.dart';
+import 'package:gas_ku/app/modules/detection/controllers/detection_controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../../../theme/colors.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
 
-  const CameraScreen({Key? key, required this.cameras}) : super(key: key);
+  CameraScreen(this.cameras);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late CameraController _controller;
-  late ObjectDetection _objectDetection;
-  List<dynamic>? _recognitions;
-  bool _isDisposed = false;
+  final uye = Get.put(DetectionController());
+  late CameraController controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
-    _objectDetection = ObjectDetection();
-    _objectDetection.loadModel();
 
-    _controller.initialize().then((_) {
-      if (!_isDisposed) {
+    if (widget.cameras == null || widget.cameras.length < 1) {
+      print('Camera is not found');
+    } else {
+      controller = CameraController(
+        widget.cameras[0],
+        ResolutionPreset.high,
+      );
+      controller.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
         setState(() {});
-        _controller.startImageStream((cameraImage) {
-          _detectObjects(cameraImage);
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _isDisposed = true;
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> _detectObjects(CameraImage cameraImage) async {
-    await _objectDetection.detectObjects(cameraImage);
-
-    if (!_isDisposed) {
-      setState(() {
-        _recognitions = _objectDetection.getRecognitions();
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_controller.value.isInitialized) {
+    // Size screen = MediaQuery.of(context).size;
+    if (controller == null || !controller.value.isInitialized) {
       return Container();
     }
-    return AspectRatio(
-      aspectRatio: _controller.value.aspectRatio,
-      child: Stack(
-        children: [
-          CameraPreview(_controller),
-          if (_recognitions != null)
-            CustomPaint(
-              painter: ObjectPainter(
-                recognitions: _recognitions!,
-                previewSize: Size(
-                  _controller.value.previewSize!.height,
-                  _controller.value.previewSize!.width,
+    return Column(
+      children: [
+        Container(
+          color: Colors.blue,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.7,
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: CameraPreview(controller),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16), topRight: Radius.circular(16))),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: Form(
+            key: uye.formKey1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hasil Deteksi',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                imageSize: Size(
-                  _controller.value.previewSize!.height,
-                  _controller.value.previewSize!.width,
+                SizedBox(
+                  height: 8,
                 ),
-              ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: itemColor,
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Gas Ijo',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '25',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: itemColor,
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Blue Gas',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '10',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: itemColor,
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Bright Gas',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '15',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      height: 45,
+                      width: MediaQuery.of(context).size.width,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          uye.inventory("25", "10", "8");
+                        },
+                        child: Text(
+                          'Simpan Data',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-        ],
-      ),
+          ),
+        ),
+      ],
     );
-  }
-}
-
-class ObjectPainter extends CustomPainter {
-  final List<dynamic> recognitions;
-  final Size previewSize;
-  final Size imageSize;
-
-  ObjectPainter({
-    required this.recognitions,
-    required this.previewSize,
-    required this.imageSize,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Implement your custom painting logic here
-    // Use the canvas and other provided parameters to draw the bounding boxes or overlays on the image
-    // Example implementation:
-    for (var recognition in recognitions) {
-      String label = recognition['label'];
-      double confidence = recognition['confidence'];
-      dynamic boundingBox = recognition['boundingBox'];
-
-      // Draw the bounding box on the canvas
-      // Example code:
-      Rect rect = Rect.fromLTRB(
-        boundingBox['left'],
-        boundingBox['top'],
-        boundingBox['right'],
-        boundingBox['bottom'],
-      );
-      Paint paint = Paint()
-        ..color = Colors.red
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0;
-      canvas.drawRect(rect, paint);
-
-      // Draw label and confidence text
-      // Example code:
-      TextSpan labelSpan = TextSpan(
-        text: '$label (${(confidence * 100).toStringAsFixed(2)}%)',
-        style: TextStyle(color: Colors.red, fontSize: 14.0),
-      );
-      TextPainter labelPainter = TextPainter(
-        text: labelSpan,
-        textDirection: TextDirection.ltr,
-      );
-      labelPainter.layout();
-      labelPainter.paint(
-        canvas,
-        Offset(rect.left, rect.top - labelPainter.height - 2),
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }

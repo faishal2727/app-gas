@@ -29,6 +29,16 @@ dependencies:
   tflite_flutter: ^0.10.0
   flutter_tflite: ^1.0.1
   fluttertoast: ^8.0.8
+  pie_chart: ^5.3.2
+  webview_flutter: ^4.2.2
+  flutter_inappwebview: ^5.7.2+3
+  flutter_downloader: 1.10.2
+  path_provider: 2.0.15
+  permission_handler: 10.2.0
+  device_apps: ^2.2.0
+  pointer_interceptor: ^0.9.3+4
+
+
   get: 4.6.5
   flutter: 
     sdk: flutter
@@ -45,9 +55,7 @@ flutter:
   assets:
     - assets/image/
     - assets/lottie/
-    - assets/x/
-    - assets/labels.txt
-    - assets/model.tflite
-    - assets/y.txt
-    - assets/y.tflite
+    - assets/x/gas.tflite
+    - assets/x/classes.txt
+    - assets/lottie/model.tflite
 

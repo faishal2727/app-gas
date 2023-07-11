@@ -1,6 +1,8 @@
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:gas_ku/app/component/card_visualisasi.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../component/card_deteksi.dart';
 import '../../../component/card_history.dart';
 import '../../../component/card_main.dart';
@@ -11,11 +13,12 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-      final mediaQueryHeight = MediaQuery.of(context).size.height;
-      final mediaQueryWidth = MediaQuery.of(context).size.width;
-      final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: secondaryColor,
       body: SafeArea(
@@ -30,13 +33,14 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
+                    padding: EdgeInsetsDirectional.all(8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           controller.cdate.toString(),
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                         SizedBox(
                           height: 2,
@@ -47,15 +51,15 @@ class HomeView extends GetView<HomeController> {
                             Text(
                               'Hai,',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.white),
                             ),
                             Text(
-                              ' Admin 1',
+                              ' Selamat Datang',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.white),
                             ),
                           ],
@@ -87,56 +91,89 @@ class HomeView extends GetView<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 5, bottom: 10),
+                      padding: EdgeInsets.only(top: 14),
                       child: Text(
                         'Menu Utama',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
                     Row(
                       children: [
                         Card_History(),
+                        Card_Vis(),
                         Card_Deteksi(),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      child: Text('Daftar Gas',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    Container(
+                      height: 2,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.grey.withOpacity(0.3),
+                            Colors.transparent,
+                            Colors.grey.withOpacity(0.3),
+                          ],
+                          stops: [0, 0.5, 1],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                      ),
                     ),
-                    Obx(() {
-                      return ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: controller.gas.length,
-                        itemBuilder: (context, index) {
-                          // final GasDetail gas = gasList[index];
-                          return Card_Gas(gas: controller.gas[index]);
-                          // InkWell(
-                          //     onTap: () {
-                          //       Get.toNamed(Routes.DETAIL, arguments: [
-                          //         controller.gas[index].gasName,
-                          //         controller.gas[index].image,
-                          //         controller.gas[index].size,
-                          //         controller.gas[index].currentStock,
-                          //         controller.gas[index].mustStock,
-                          //         controller.gas[index].minStock,
-                          //         controller.gas[index].noHpDist
-                          //       ]);
-                          //       print("uny ${controller.gas[index].size}");
-                          //       print("PALAK ${[
-                          //         controller.gas[index].size,
-                          //         controller.gas[index].gasName
-                          //       ]}");
-                          //     },
-                          //     child: Card_Gas(gas: controller.gas[index]));
-                        },
-                      );
-                    }),
+                    Padding(
+                      padding: EdgeInsets.only(top: 2),
+                      child: Text(
+                        'Daftar Gas',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                    Obx(
+                      () {
+                        if (controller.isLoading.value) {
+                          return Padding(
+                            padding: const EdgeInsets.all(130.0),
+                            child: Center(
+                              child: Lottie.asset('assets/lottie/load.json',
+                                  width: 100, height: 100),
+                            ),
+                          );
+                        } else if (controller.gas.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 130),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Lottie.asset('assets/lottie/not-result.json',
+                                      width: 250, height: 250),
+                                  Text(
+                                    "Hmmm ... Sepertinya Data Tidak Ada",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: primaryColor),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.gas.length,
+                            itemBuilder: (context, index) {
+                              return CardGas(gas: controller.gas[index]);
+                            },
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

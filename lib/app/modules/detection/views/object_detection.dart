@@ -13,7 +13,8 @@ class ObjectDetection {
   Future<void> loadModel() async {
     try {
       final interpreterOptions = InterpreterOptions();
-      _interpreter = await Interpreter.fromAsset('assets/x/gas.tflite', options: interpreterOptions);
+      _interpreter = await Interpreter.fromAsset('assets/x/gas.tflite',
+          options: interpreterOptions);
       _labels = await loadLabels();
       _isModelLoaded = true;
     } catch (e) {
@@ -22,17 +23,17 @@ class ObjectDetection {
   }
 
   Future<List<String>> loadLabels() async {
-  try {
-    String labelsPath = 'assets/labels.txt'; // Ubah sesuai dengan path file yang benar
-    String labelsContent = await rootBundle.loadString(labelsPath);
-    List<String> labels = labelsContent.split('\n');
-    return labels;
-  } catch (e) {
-    print('Error loading labels: $e');
-    return [];
+    try {
+      String labelsPath =
+          'assets/x/classes.txt'; // Ubah sesuai dengan path file yang benar
+      String labelsContent = await rootBundle.loadString(labelsPath);
+      List<String> labels = labelsContent.split('\n');
+      return labels;
+    } catch (e) {
+      print('Error loading labels: $e');
+      return [];
+    }
   }
-}
-
 
   Future<void> detectObjects(CameraImage cameraImage) async {
     if (!_isModelLoaded) {
@@ -75,6 +76,7 @@ class ObjectDetection {
 
   void _setRecognitions(List<dynamic> recognitions) {
     _recognitions = recognitions;
+    print("NGENTSOT $_recognitions"); // Cetak hasil deteksi ke dalam debug console
   }
 
   List<dynamic> getRecognitions() {
