@@ -1,16 +1,12 @@
 # gas_ku
 
-A new Flutter project.
 
-## Getting Started
+## 📷 Screen Shots Fitur
+Login Screen | SignUp Screen | Home Screen | Detail Screen
+:----------:|:-------------:|:--------:|:--------:
+<img src="https://github.com/faishal2727/app-gas/blob/main/ss/login.png" width=300/> | <img src="https://github.com/faishal2727/app-gas/blob/main/ss/signup.png" width=300/> |<img src="https://github.com/faishal2727/app-gas/blob/main/ss/home.png" width=300/> | <img src="https://github.com/faishal2727/app-gas/blob/main/ss/detail.png" width=300/> |
 
-This project is a starting point for a Flutter application.
+Detection Screen | History Screen | visualisasi Screen | Profile Screen
+:----------:|:-------------:|:--------:|:--------:
+<img src="https://github.com/faishal2727/app-gas/blob/main/ss/camera.png" width=300/> | <img src="https://github.com/faishal2727/app-gas/blob/main/ss/history.png" width=300/> |<img src="https://github.com/faishal2727/app-gas/blob/main/ss/visualisasi.png" width=300/> | <img src="https://github.com/faishal2727/app-gas/blob/main/ss/visualisasi.png" width=300/> |
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
